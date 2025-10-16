@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import { mdToHtml } from "./markdown";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
@@ -43,7 +44,7 @@ export async function getPostData(slug: string): Promise<Post | null> {
   const { content, data } = matter(fileContents);
 
   const processedContent = await remark().use(html).process(content);
-  const contentHtml = processedContent.toString();
+  const contentHtml = await mdToHtml(processedContent.toString());
 
   return {
     slug,
