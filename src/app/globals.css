@@ -1,27 +1,176 @@
 @import "tailwindcss";
-/* @plugin @tailwindcss/typography; */
+@import "highlight.js/styles/atom-one-dark.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.prose {
+  /* max-width: 65ch; */
+}
+.prose h1 {
+  font-size: 2.25em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+}
+.prose h2 {
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.prose h3 {
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  font-weight: 600; /* 제목은 두껍게 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+.prose ul {
+  list-style-type: disc;
+  margin-left: 1.25em;
+}
+.prose code {
+  background-color: rgba(175, 184, 193, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border: 1px solid #e5e7eb; /* 옅은 회색 (Tailwind gray-200) */
+}
+
+.prose th,
+.prose td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5em 0.75em;
+}
+
+.prose th {
+  background-color: #f3f4f6; /* 옅은 회색 (Tailwind gray-100) */
+  font-weight: 600;
+  text-align: left;
+}
+
+.dark .prose table {
+  border: 1px solid #374151; /* 어두운 테두리 (Tailwind gray-700) */
+}
+
+.dark .prose th,
+.dark .prose td {
+  border: 1px solid #374151;
+}
+
+.dark .prose th {
+  background-color: #1f2937; /* 어두운 배경색 (Tailwind gray-800) */
+  color: #f3f4f6;
+}
+
+.prose blockquote {
+  color: #6b7280; /* Tailwind gray-500 정도 */
+  border-left: 4px solid #d1d5db; /* Tailwind gray-300 정도 */
+  padding-left: 1em;
+  margin-left: 0;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.dark .prose blockquote {
+  color: #9ca3af; /* 다크 모드에서 텍스트 색상 */
+  border-left: 4px solid #4b5563; /* 다크 모드에서 테두리 색상 */
+}
+.prose blockquote p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #ffffff; /* 흰색 배경 */
+  color: #1f2937; /* 진한 회색 글자 (Tailwind gray-800 정도) */
+}
+
+html.dark {
+  background-color: #030712; /* 매우 어두운 배경 (Tailwind gray-950 정도) */
+  color: #f3f4f6; /* 밝은 회색 글자 */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+pre {
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+}
+
+code {
+  font-family: "Fira Code", "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono",
+    monospace;
+}
+
+.toc ol,
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc li {
+  margin-bottom: 0.5rem;
+}
+
+.toc li ul {
+  padding-left: 1rem;
+}
+
+.toc-link {
+  display: block;
+  color: #4a5568;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.toc-link:hover {
+  color: #2b6cb0;
+}
+
+.toc-link.depth-2 {
+  margin-left: 0.5rem;
+}
+
+.toc-link.depth-3 {
+  margin-left: 1rem;
+}
+
+.toc-link.depth-4 {
+  margin-left: 1.5rem;
+}
+
+/* 강제적용 */
+h1 {
+  color: #1f2937 !important; /* Tailwind gray-800 정도 (검은색) 강제 */
+}
+
+.dark h1 {
+  color: #f3f4f6 !important; /* 밝은 회색 (흰색) 강제 */
+}
+
+html.dark .toc-link.toc-link-h2 {
+  color: #f3f4f6;
+}
+.toc-link.toc-link-h2:hover {
+  cursor: pointer;
 }

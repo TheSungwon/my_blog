@@ -1,6 +1,7 @@
 ---
 title: "Hello World"
 date: "2025-10-16"
+description: "This is the first post of the blog."
 tags: ["hello", "markdown", "blog"]
 ---
 

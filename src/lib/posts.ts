@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
 import { mdToHtml } from "./markdown";
 
 const postsDirectory = path.join(process.cwd(), "posts");
@@ -11,12 +9,14 @@ const postsDirectory = path.join(process.cwd(), "posts");
 export interface PostMeta {
   title: string;
   date: string;
+  description?: string;
   tags?: string[];
 }
 
 export interface Post extends PostMeta {
   slug: string;
   contentHtml: string;
+  tocHtml: string;
 }
 
 /**
@@ -32,6 +32,37 @@ export function getAllPostSlugs(): { slug: string }[] {
 }
 
 /**
+ * 모든 게시물 메타데이터 가져오기
+ */
+export function getAllPostsMeta(): PostMeta[] {
+  const fileNames = fs
+    .readdirSync(postsDirectory)
+    .filter((f) => f.endsWith(".md"));
+
+  const allPostsMeta = fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.md$/, "");
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data } = matter(fileContents);
+
+    return {
+      slug,
+      title: data.title ?? slug,
+      date: data.date ?? "",
+      description: data.description ?? "",
+      tags: (data.tags as string[]) ?? [],
+    };
+  });
+
+  // 날짜 기준으로 최신순 정렬
+  return allPostsMeta.sort((a, b) => {
+    if (a.date < b.date) return 1;
+    if (a.date > b.date) return -1;
+    return 0;
+  });
+}
+
+/**
  * 특정 슬러그의 markdown 파일을 읽고 파싱
  */
 export async function getPostData(slug: string): Promise<Post | null> {
@@ -43,14 +74,15 @@ export async function getPostData(slug: string): Promise<Post | null> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { content, data } = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(content);
-  const contentHtml = await mdToHtml(processedContent.toString());
+  const { contentHtml, tocHtml } = await mdToHtml(content);
 
   return {
     slug,
     contentHtml,
+    tocHtml,
     title: data.title ?? slug,
     date: data.date ?? "",
-    tags: data.tags ?? [],
+    description: data.description ?? "",
+    tags: (data.tags as string[]) ?? [],
   };
 }

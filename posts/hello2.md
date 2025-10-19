@@ -1,7 +1,9 @@
 ---
 title: "Hello World 블로그 테스트"
 date: "2025-10-16"
+description: "Next.js와 Markdown을 이용한 블로그 테스트 포스트입니다."
 cover: "/images/cover-sample.jpg"
+tags: ["Next.js", "Markdown", "test"]
 ---
 
 # 👋 Hello World
