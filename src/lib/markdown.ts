@@ -7,14 +7,14 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeToc from "@jsdevtools/rehype-toc";
-import { VNode } from "unist";
+import { Node } from "unist";
 
 export async function mdToHtml(
   markdown: string
 ): Promise<{ contentHtml: string; tocHtml: string }> {
   let tocHtml = "";
 
-  let tocNode: VNode | null = null;
+  let tocNode: Node | null = null;
 
   // unified 파이프라인을 설정합니다.
   const file = await unified()
