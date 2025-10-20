@@ -32,6 +32,8 @@ export async function mdToHtml(
       },
     })
     // 7. 목차 생성. 목차가 TOCNode에 저장됩니다. (본문에 삽입되는 것이 아님)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     .use(rehypeToc, {
       headings: ["h2", "h3"],
       cssClasses: {
