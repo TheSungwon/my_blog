@@ -14,7 +14,8 @@ export async function mdToHtml(
 ): Promise<{ contentHtml: string; tocHtml: string }> {
   let tocHtml = "";
 
-  let tocNode: Node | null = null;
+  // let tocNode: Node | null = null;
+  let tocNode: Element | undefined;
 
   // unified 파이프라인을 설정합니다.
   const file = await unified()
@@ -40,8 +41,7 @@ export async function mdToHtml(
         toc: "toc",
         link: "toc-link",
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      customizeToc: (toc: any) => {
+      customizeToc: (toc: Element) => {
         if (toc && toc.children && toc.children.length > 0) {
           tocNode = toc; // TOC 트리를 저장
         }
