@@ -40,7 +40,8 @@ export async function mdToHtml(
         toc: "toc",
         link: "toc-link",
       },
-      customizeToc: (toc) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      customizeToc: (toc: any) => {
         if (toc && toc.children && toc.children.length > 0) {
           tocNode = toc; // TOC 트리를 저장
         }
