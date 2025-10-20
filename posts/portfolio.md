@@ -3,7 +3,16 @@ title: "Backend & Beyond By Sungwon 😎"
 date: "2025-10-17"
 description: "안정적인 시스템을 만들고, 새로운 기술을 배웁니다."
 cover: "/images/cover-engineer.jpg"
-tags: ["Spring Boot", "Kafka", "Microservice", "Performance", "DevOps"]
+tags:
+  [
+    "Spring Boot",
+    "Kafka",
+    "Microservice",
+    "Performance",
+    "DevOps",
+    "Node.js",
+    "Next.js",
+  ]
 ---
 
 ## <img src="/img/asdasdasd.jpg" alt="" width="100" />
@@ -468,3 +477,101 @@ services:
 | rabbitMQ       | <img src="/img/rabbit_send.png" alt="" width="500" /> <img src="/img/rabbit_receive.png" alt="" width="500" /> |
 | 알림           | <img src="/img/트래픽.png" alt="" width="200" />                                                               |
 | Container 구성 | <img src="/img/docker_desktop.png" alt="" width="500" />                                                       |
+
+---
+
+## 📘 토이 프로젝트: mini game — Next.js 기반 게임 허브
+
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/nextjs_mini_game) 🔗_**
+- **_[사이트보러가기](https://nextjs-mini-game.vercel.app/) ⚽_**
+
+**🧩 프로젝트 개요**
+
+**프로젝트명:** nextjs-mini-game
+
+**✨ 주요 기능**
+
+**_1. 🎯 정교한 2D 물리 엔진 구현_**
+
+- **중력 및 마찰**: 모든 공에 일관된 중력과 마찰을 적용하여 실제와 같은 움직임을 구현했습니다.
+- **공-공 충돌**: 공들 간의 충돌 시, 완전 탄성 충돌 로직을 적용하여 운동량과 에너지가 보존되도록 처리했습니다.
+- **공-장애물 충돌**: 기울어진 막대, 회전하는 막대, 탄성 있는 막대 등 다양한 종류의 장애물과의 충돌을 정교하게 처리합니다. 특히 회전하는 장애물은 충돌 시 공에 회전 운동량을 전달하여 예측 불가능하고 역동적인 플레이를 유도합니다.
+
+**_2. 🎲 동적인 게임 환경_**
+
+- **랜덤 장애물 생성**: 매 게임 시작 시, 기울기, 회전 속도, 탄성 계수가 무작위로 설정된 다양한 형태의 장애물이 자동으로 배치됩니다. 이를 통해 매번 새로운 플레이 경험을 제공합니다.
+- **멀티 플레이어 지원**: 여러 명의 플레이어가 동시에 참여하여 경쟁할 수 있도록 설계되었습니다. (현재는 이름 기반의 시뮬레이션)
+- **실시간 순위 시스템**: 게임이 종료되면 각 플레이어의 도착 순서를 기반으로 실시간 순위를 표시합니다.
+
+**🛠️ 기술 스택**
+
+- **프론트엔드**: `Next.js 15 (App Router)`, `React 19`, `TypeScript`
+- **상태 관리**: `React Hooks (useState, useEffect, useRef)`
+- **스타일링**: `Tailwind CSS`
+- **UI 컴포넌트**: `Radix UI (@radix-ui/react-progress, @radix-ui/react-slot)`
+- **그래픽**: `HTML5 Canvas API`
+- **유틸리티**: `clsx`, `tailwind-merge`, `lucide-react`
+
+---
+
+---
+
+## 📘 토이 프로젝트: markdown 블로그 — Next.js 기반 markdown 블로그
+
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/my_blog) 🔗_**
+- **_[사이트보러가기](https://sungwon-blog.vercel.app/) 📜_**
+
+**🧩 프로젝트 개요**
+
+**프로젝트명:** my_blog
+
+**✨ 주요 기능**
+
+개발 기록을 담는 개인 블로그입니다. Markdown 기반 포스트를 정적 생성(SSG)하여 빠르고 안정적인 읽기 경험을 제공합니다. 다크 모드, 목차(TOC), 코드 하이라이트 등 글 읽기에 최적화된 UI/UX를 제공합니다.
+
+- **Markdown 포스트**
+- **목차 자동 생성**
+- **코드 하이라이트**
+- **다크 모드 토글**
+- **정적 생성(SSG)**
+- **타이포그래피 최적화**
+
+**🛠️ 기술 스택**
+
+- **프론트엔드**: `Next.js 15 (App Router)`, `React 19`, `TypeScript`
+- **스타일링**: `Tailwind CSS 4`, `PostCSS`
+- **Markdown 파이프라인**: `unified`, `remark(remark-parse, remark-gfm, remark-rehype)`, `rehype(rehype-slug, rehype-autolink-headings, rehype-toc, rehype-highlight, rehype-stringify)`, `gray-matter`
+- **테마**: `next-themes`
+
+**📁 프로젝트 구조**
+
+```
+
+├─ posts/                # 블로그 글(Markdown)
+├─ public/               # 정적 자산(아이콘/이미지)
+├─ src/
+│  ├─ app/
+│  │  ├─ components/    # 레이아웃 관련 컴포넌트(Header, Providers)
+│  │  ├─ posts/
+│  │  │  ├─ page.tsx    # /posts 목록 페이지
+│  │  │  └─ [slug]/
+│  │  │     └─ page.tsx # /posts/[slug] 상세 페이지
+│  │  ├─ layout.tsx     # 전역 레이아웃(메타/헤더/Providers)
+│  │  ├─ page.tsx       # 루트 인덱스(포스트 카드 그리드)
+│  │  └─ globals.css    # 전역 스타일(타이포그래피/TOC/다크)
+│  ├─ components/
+│  │  └─ ThemeToggle.tsx
+│  └─ lib/
+│     ├─ markdown.ts    # Markdown → HTML 변환 + TOC 생성
+│     └─ posts.ts       # 포스트 읽기/메타/정적 파라미터
+├─ package.json
+├─ next.config.ts
+├─ tailwind.config.ts
+├─ postcss.config.mjs
+├─ tsconfig.json
+└─ eslint.config.mjs
+```
+
+---
+
+# 감사합니다 ! 😄
