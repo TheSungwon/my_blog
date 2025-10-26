@@ -160,7 +160,7 @@ RPA와 웹 개발(Spring Boot + Node.js)을 함께 수행하며,
 
 ---
 
-## 📘 사이드 프로젝트: Shortify — 실시간 URL 단축 & 로그 분석 백엔드 시스템
+## 📘 사이드 프로젝트 1: Shortify — 실시간 URL 단축 & 로그 분석 백엔드 시스템
 
 **_[GitHub 보기러가기](https://github.com/thesungwon/shortify) 🔗_**
 
@@ -480,7 +480,7 @@ services:
 
 ---
 
-## 📘 토이 프로젝트: mini game — Next.js 기반 게임 허브
+## 📘 토이 프로젝트 2: mini game — Next.js 기반 게임 허브
 
 - **_[GitHub 보기러가기](https://github.com/TheSungwon/nextjs_mini_game) 🔗_**
 - **_[사이트보러가기](https://nextjs-mini-game.vercel.app/) ⚽_**
@@ -516,7 +516,7 @@ services:
 
 ---
 
-## 📘 토이 프로젝트: markdown 블로그 — Next.js 기반 markdown 블로그
+## 📘 토이 프로젝트 3: markdown 블로그 — Next.js 기반 markdown 블로그
 
 - **_[GitHub 보기러가기](https://github.com/TheSungwon/my_blog) 🔗_**
 - **_[사이트보러가기](https://sungwon-blog.vercel.app/) 📜_**
@@ -571,6 +571,61 @@ services:
 ├─ tsconfig.json
 └─ eslint.config.mjs
 ```
+
+## 📘 토이 프로젝트 4: next_ocr — Next.js 기반 문서 ocr
+
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/next_ocr) 🔗_**
+- **_[사이트보러가기](https://next-ocr-six.vercel.app/) 📑_**
+
+**🧩 프로젝트 개요**
+
+**프로젝트명:** next_ocr
+
+**✨ 주요 기능**
+
+- **OCR 업로드/붙여넣기**
+  - 파일 업로드 또는 영역에 Ctrl+V로 이미지 붙여넣기
+  - OpenRouter Vision 모델로 텍스트 추출
+- **결과 저장/관리**
+  - Neon PostgreSQL에 이미지(Base64 URL)와 결과 텍스트, 생성시간 저장
+  - 히스토리에서 미리보기/삭제(소프트 삭제)
+- **대시보드**
+  - 총 건수, 오늘, 7일 합계, 평균 텍스트 길이
+  - 최근 14일 추이(미니 차트), 최근 10건 프리뷰
+- **레이아웃/테마**
+  - 반응형 사이드바/헤더
+  - next-themes + CSS 변수 토큰으로 다크/라이트 자동 대응
+
+**_2. 🎲 API 엔드포인트_**
+
+- **POST `/api/ocr`**
+  - Body: `{ imageBase64: string, mimeType: string }`
+  - 동작: OpenRouter에 OCR 요청 → DB 저장 → `{ id, extractedText, createdAt }`
+- **GET `/api/ocr`**
+  - Query: `?limit=20&cursor=ISO_DATE` (created_at 커서 기준)
+  - 응답: `{ items, nextCursor }`
+- **DELETE `/api/ocr/[id]`**
+  - 동작: 소프트 삭제(`deleted_at = now()`)
+- **GET `/api/ocr/stats`**
+  - 응답: `{ summary, series, recent }`
+  - summary: 총 건수/오늘/7일/평균 텍스트 길이
+  - series: 최근 14일 일별 집계
+  - recent: 최근 10건
+- **GET `/api/health`**
+  - DB 연결 상태 확인 `{ health: "ok", now }`
+
+**🛠️ 기술 스택**
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **UI/Styling**:
+  - Tailwind CSS v4
+  - next-themes (다크모드)
+  - Radix UI 기반 컴포넌트
+  - lucide-react 아이콘
+- **State**: React 19, Zustand(선택적)
+- **OCR API**: OpenRouter (예시 모델: `google/gemma-3-27b-it:free` 등)
+- **DB**: Neon PostgreSQL (@neondatabase/serverless)
+- **유틸**: clsx, tailwind-merge, uuid
 
 ---
 
