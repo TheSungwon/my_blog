@@ -801,7 +801,7 @@ type: kubernetes.io/service-account-token
 - minikube start k8s 클러스터 실행
 - kubectl cluster-info k8s 클러스터 정보 확인
 
-## <img src="/img/k8s_pods.jpg" alt="" />
+## <img src="/img/k8s_pods_list.jpg" alt="" />
 
 - kubectl get pods k8s pod 목록 확인
 
