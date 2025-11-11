@@ -629,4 +629,186 @@ services:
 
 ---
 
+---
+
+## 🏗️ 토이 프로젝트 5:Real CMP K8s Connector: K8s API 연동 모듈
+
+**1\. 프로젝트 개요 및 목표**
+
+이 프로젝트는 클라우드 관리 플랫폼(CMP) 백엔드의 핵심 기능인 **이기종 IaaS 플랫폼(Kubernetes) 자원 통합 조회 모듈**을 구현하고, **실제 환경에서의 인증/인가 문제를 해결**하여 실무 역량을 증명하는 것을 목표로 합니다.
+
+- **프로젝트명:** **Real CMP K8s Connector**
+- **핵심 목표:** Kubernetes API 연동, 논블로킹 통신 구현, K8s 보안(인증/인가) 처리
+- **주요 기능:** K8s Pod 목록 조회, 데이터 가공 및 CMP 포털용 REST API 제공
+
+---
+
+**2\. 사용 기술 스택 (Tech Stack)**
+
+| 카테고리      | 상세 스택                                              | 핵심 역할 및 선정 이유                                                                |
+| :------------ | :----------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| **백엔드**    | **Java 17+**, **Spring Boot**                          | REST API 백엔드 구축 및 DI (Dependency Injection) 관리                                |
+| **API 통신**  | **Spring WebFlux (WebClient)**                         | Multi API 호출이 잦은 CMP 환경의 **논블로킹(Non-blocking) 통신** 및 **동시성 최적화** |
+| **개발 환경** | **Kubernetes (MiniKube)**, **kubectl**, **PowerShell** | 실제 K8s 환경에서 API 연동 및 자원 관리 경험 확보                                     |
+
+---
+
+**3\. 핵심 구현 내용 및 코드 상세**
+
+#### 3.1. K8s 논블로킹 API 연동 및 데이터 가공
+
+**[코드 첨부]** `K8sApiService.java`의 핵심 연동 및 데이터 가공 로직입니다. **WebFlux의 `Mono`와 `map` 연산**을 사용하여 논블로킹 방식으로 K8s API 응답을 받아 CMP용 DTO로 정제합니다.
+
+```java
+// K8sApiService.java (핵심 로직)
+@Service
+public class K8sApiService {
+
+    //kubectl cluster-info로 확인한 주소
+    private static final String K8S_API_BASE_URL = "https://127.0.0.1:????" //kubectl cluster-info ;
+
+    private static final String K8S_AUTH_TOKEN = "token발급 값 입력";
+
+    private final WebClient webClient;
+
+    public K8sApiService() throws Exception{
+        // 1. SSL 인증서 검증을 무시하는 SSL Context 생성
+        SslContext sslContext = SslContextBuilder.forClient()
+                .trustManager(InsecureTrustManagerFactory.INSTANCE) // 보안 위험! 개발 목적으로만 사용
+                .build();
+
+        // 2. 이 Context를 Netty 기반의 HttpClient에 적용
+        HttpClient httpClient = HttpClient.create()
+                .secure(sslContextSpec -> sslContextSpec.sslContext(sslContext));
+
+        // 3. WebClient에 비보안 HTTP 커넥터 적용
+        this.webClient = WebClient.builder()
+                .baseUrl(K8S_API_BASE_URL)
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .build();
+    }
+
+    public Mono<K8sPodList> getPodList() {
+        return webClient.get()
+                .uri("/api/v1/pods")
+                .header("Authorization", "Bearer " + K8S_AUTH_TOKEN)
+                .retrieve()
+                .bodyToMono(K8sPodList.class);
+    }
+}
+
+```
+
+**[코드 첨부]** 최종 CMP 포털에서 사용할 **`K8sPodList.java`** DTO 코드.
+
+```java
+//중첩클래스 계층적DTO json구조를 정확하게 매핑
+@Data
+public class K8sPodList {
+    private List<PodItem> items; //k8s api응답 목록
+
+    @Data
+    public static class PodItem{
+        private Metadata metadata;
+        private PodStatus status;
+
+        @Data
+        public static class Metadata{
+            private String name;
+        }
+
+        @Data
+        public static class PodStatus{
+            private String phase;
+        }
+    }
+}
+```
+
+**[코드 첨부]** K8s 클러스터에 현재 떠 있는 실제 Pod목록 확인 **`K8sResourceController.java`** Controller 코드.
+
+```java
+//http://localhost:8080/api/v1/k8s/pods 호출
+@RestController
+@RequestMapping("/api/v1/k8s")
+@RequiredArgsConstructor
+public class K8sResourceController {
+
+    private final K8sApiService k8sApiService;
+
+    @GetMapping("/pods")
+    public Mono<K8sPodList> getK8sPods() {
+
+        return k8sApiService.getPodList();
+    }
+
+}
+```
+
+---
+
+**4\. 기술적 해결 과정**
+
+#### 4.1. K8s API 인가(Authorization) 및 인증 문제 해결
+
+| 문제              | 상세 내용                                                           | 해결 방법                                                                                                                                        | 어필 포인트                                                                                  |
+| :---------------- | :------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
+| **403 Forbidden** | 토큰 없이 접속 시 `system:anonymous`로 처리되어 자원 조회 권한 거부 | 1. **`cmp-api-user` Service Account** 및 **ClusterRoleBinding** (`view` 권한) 적용. 2. **YAML 파일**을 이용한 **토큰 Secret 수동 생성** 및 추출. | \*\*최신 K8s 버전(1.24+)\*\*의 보안 정책 및 **시스템 간 인가(Authorization)** 처리 능력 입증 |
+| **SSL 인증서**    | MiniKube 자체 서명 인증서로 인한 `SSLHandshakeException` 발생       | 개발 환경을 위해 **WebClient에 비보안 커넥터**를 임시 적용하여 개발 진행 (운영 환경 시 TrustStore 등록 필요성 인지)                              | **클라우드 환경에서의 보안 통신 및 인증서** 문제 해결 경험                                   |
+
+```yml
+# sa-token-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cmp-api-user-token # Secret 이름
+  namespace: default
+  annotations:
+    # 🌟 이 Secret이 cmp-api-user 계정의 토큰임을 명시합니다. 🌟
+    kubernetes.io/service-account.name: cmp-api-user
+type: kubernetes.io/service-account-token
+#
+#
+#
+#
+
+#1. 서비스 계정 생성
+#kubectl create serviceaccount cmp-api-user -n default
+#default 네임스페이스에 cmp-api-user라는 계정을 만듭니다.
+
+#2. 읽기 권한 부여
+#kubectl create clusterrolebinding cmp-read-pods-binding --clusterrole=view --serviceaccount=default:cmp-api-user
+#이 계정에게 클러스터 전체 자원을 **'조회(view)'**할 수 있는 권한을 부여합니다.
+#
+#
+#-------sa-token-secret.yaml 실행
+# kubectl apply -f sa-token-secret.yaml
+#
+# 1. 인코딩된 토큰 문자열을 변수에 담습니다.
+#$TOKEN_ENCODED = kubectl get secret cmp-api-user-token -o jsonpath='{.data.token}' -n default
+
+# 2. PowerShell 내장 함수를 사용해 Base64 디코딩합니다.
+#$FINAL_K8S_TOKEN = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($TOKEN_ENCODED))
+
+# 3. 최종 토큰을 출력합니다.
+#Write-Host "🌟 최종 획득된 K8s 토큰: $FINAL_K8S_TOKEN"
+```
+
+**5\. minikube 실행 및 API 호출 결과**
+
+## <img src="/img/minikube_cli.jpg" alt=""  />
+
+- minikube start k8s 클러스터 실행
+- kubectl cluster-info k8s 클러스터 정보 확인
+
+## <img src="/img/k8s_pods.jpg" alt="" />
+
+- kubectl get pods k8s pod 목록 확인
+
+#
+
+---
+
+---
+
 # 감사합니다 ! 😄
