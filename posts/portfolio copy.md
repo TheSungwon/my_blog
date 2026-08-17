@@ -1,6 +1,6 @@
 ---
 title: "Backend & Beyond By Sungwon 😎"
-date: "2026-08-13"
+date: "2026-01-13"
 description: "안정적인 시스템을 만들고, 새로운 기술을 배웁니다."
 cover: "/images/cover-engineer.jpg"
 tags:
@@ -160,7 +160,7 @@ RPA와 웹 개발(Spring Boot + Node.js)을 함께 수행하며,
 
 ---
 
-## 📘 토이 프로젝트 1: Shortify — 실시간 URL 단축 & 로그 분석 백엔드 시스템
+## 📘 사이드 프로젝트 1: Shortify — 실시간 URL 단축 & 로그 분석 백엔드 시스템
 
 **_[GitHub 보기러가기](https://github.com/thesungwon/shortify) 🔗_**
 
@@ -480,9 +480,99 @@ services:
 
 ---
 
+## 📘 토이 프로젝트 2: mini game — Next.js 기반 게임 허브
 
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/nextjs_mini_game) 🔗_**
+- **_[사이트보러가기](https://nextjs-mini-game.vercel.app/) ⚽_**
 
-## 📘 토이 프로젝트 2: next_ocr — Next.js 기반 문서 ocr
+**🧩 프로젝트 개요**
+
+**프로젝트명:** nextjs-mini-game
+
+**✨ 주요 기능**
+
+**_1. 🎯 정교한 2D 물리 엔진 구현_**
+
+- **중력 및 마찰**: 모든 공에 일관된 중력과 마찰을 적용하여 실제와 같은 움직임을 구현했습니다.
+- **공-공 충돌**: 공들 간의 충돌 시, 완전 탄성 충돌 로직을 적용하여 운동량과 에너지가 보존되도록 처리했습니다.
+- **공-장애물 충돌**: 기울어진 막대, 회전하는 막대, 탄성 있는 막대 등 다양한 종류의 장애물과의 충돌을 정교하게 처리합니다. 특히 회전하는 장애물은 충돌 시 공에 회전 운동량을 전달하여 예측 불가능하고 역동적인 플레이를 유도합니다.
+
+**_2. 🎲 동적인 게임 환경_**
+
+- **랜덤 장애물 생성**: 매 게임 시작 시, 기울기, 회전 속도, 탄성 계수가 무작위로 설정된 다양한 형태의 장애물이 자동으로 배치됩니다. 이를 통해 매번 새로운 플레이 경험을 제공합니다.
+- **멀티 플레이어 지원**: 여러 명의 플레이어가 동시에 참여하여 경쟁할 수 있도록 설계되었습니다. (현재는 이름 기반의 시뮬레이션)
+- **실시간 순위 시스템**: 게임이 종료되면 각 플레이어의 도착 순서를 기반으로 실시간 순위를 표시합니다.
+
+**🛠️ 기술 스택**
+
+- **프론트엔드**: `Next.js 15 (App Router)`, `React 19`, `TypeScript`
+- **상태 관리**: `React Hooks (useState, useEffect, useRef)`
+- **스타일링**: `Tailwind CSS`
+- **UI 컴포넌트**: `Radix UI (@radix-ui/react-progress, @radix-ui/react-slot)`
+- **그래픽**: `HTML5 Canvas API`
+- **유틸리티**: `clsx`, `tailwind-merge`, `lucide-react`
+
+---
+
+---
+
+## 📘 토이 프로젝트 3: markdown 블로그 — Next.js 기반 markdown 블로그
+
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/my_blog) 🔗_**
+- **_[사이트보러가기](https://sungwon-blog.vercel.app/) 📜_**
+
+**🧩 프로젝트 개요**
+
+**프로젝트명:** my_blog
+
+**✨ 주요 기능**
+
+개발 기록을 담는 개인 블로그입니다. Markdown 기반 포스트를 정적 생성(SSG)하여 빠르고 안정적인 읽기 경험을 제공합니다. 다크 모드, 목차(TOC), 코드 하이라이트 등 글 읽기에 최적화된 UI/UX를 제공합니다.
+
+- **Markdown 포스트**
+- **목차 자동 생성**
+- **코드 하이라이트**
+- **다크 모드 토글**
+- **정적 생성(SSG)**
+- **타이포그래피 최적화**
+
+**🛠️ 기술 스택**
+
+- **프론트엔드**: `Next.js 15 (App Router)`, `React 19`, `TypeScript`
+- **스타일링**: `Tailwind CSS 4`, `PostCSS`
+- **Markdown 파이프라인**: `unified`, `remark(remark-parse, remark-gfm, remark-rehype)`, `rehype(rehype-slug, rehype-autolink-headings, rehype-toc, rehype-highlight, rehype-stringify)`, `gray-matter`
+- **테마**: `next-themes`
+
+**📁 프로젝트 구조**
+
+```
+
+├─ posts/                # 블로그 글(Markdown)
+├─ public/               # 정적 자산(아이콘/이미지)
+├─ src/
+│  ├─ app/
+│  │  ├─ components/    # 레이아웃 관련 컴포넌트(Header, Providers)
+│  │  ├─ posts/
+│  │  │  ├─ page.tsx    # /posts 목록 페이지
+│  │  │  └─ [slug]/
+│  │  │     └─ page.tsx # /posts/[slug] 상세 페이지
+│  │  ├─ layout.tsx     # 전역 레이아웃(메타/헤더/Providers)
+│  │  ├─ page.tsx       # 루트 인덱스(포스트 카드 그리드)
+│  │  └─ globals.css    # 전역 스타일(타이포그래피/TOC/다크)
+│  ├─ components/
+│  │  └─ ThemeToggle.tsx
+│  └─ lib/
+│     ├─ markdown.ts    # Markdown → HTML 변환 + TOC 생성
+│     └─ posts.ts       # 포스트 읽기/메타/정적 파라미터
+├─ package.json
+├─ next.config.ts
+├─ tailwind.config.ts
+├─ postcss.config.mjs
+├─ tsconfig.json
+└─ eslint.config.mjs
+```
+
+## 📘 토이 프로젝트 4: next_ocr — Next.js 기반 문서 ocr
 
 - **_[GitHub 보기러가기](https://github.com/TheSungwon/next_ocr) 🔗_**
 - **_[사이트보러가기](https://next-ocr-six.vercel.app/) 📑_**
@@ -541,7 +631,7 @@ services:
 
 ---
 
-## 🏗️ 토이 프로젝트 3:Real CMP K8s Connector: K8s API 연동 모듈
+## 🏗️ 토이 프로젝트 5:Real CMP K8s Connector: K8s API 연동 모듈
 
 **1\. 프로젝트 개요 및 목표**
 
@@ -719,6 +809,151 @@ type: kubernetes.io/service-account-token
 
 ---
 
+## 📘 토이 프로젝트 6: 이메일 피싱 감지
 
+- **_[GitHub 보기러가기](https://github.com/TheSungwon/email-detector) 🔗_**
+- **_[사이트보러가기](https://email-detector-zeta.vercel.app/) 📜_**
+
+**✨ 주요 기능**
+
+- 🔍 **실시간 피싱 분석**: 8가지 핵심 피싱 패턴 탐지
+- 📊 **위험도 점수화**: 0-100점 스코어링 시스템
+- 🎨 **애플 스타일 UI**: 미니멀하고 직관적인 사용자 경험
+- ⚡ **즉시 검사**: 파일 업로드 후 바로 결과 확인
+- 🌐 **반응형 디자인**: 모든 기기에서 완벽한 호환성
+
+**🎯 탐지 기능**
+
+PhishDetector는 다음과 같은 피싱 패턴을 지능적으로 탐지합니다:
+
+| 탐지 항목             | 위험 점수 | 설명                                     |
+| --------------------- | --------- | ---------------------------------------- |
+| 긴급 유도             | 30점      | urgent, immediately, asap 등 긴급성 표현 |
+| 계정 정보 요구        | 35점      | password, login, verify your account 등  |
+| 금융/쇼핑 사이트 언급 | 25점      | bank, paypal, amazon, apple 등           |
+| 위험한 첨부파일 언급  | 50점      | .exe, .scr, .zip, .js 등                 |
+| 비트코인 주소 발견    | 40점      | 암호화폐 지갑 주소 패턴                  |
+| 일회용 메일 사용      | 35점      | mailinator, 10minutemail 등              |
+| 의심스러운 링크 유도  | 20점      | click here, click below 등               |
+| 단축 URL 사용         | 30점      | bit.ly, tinyurl, t.co 등                 |
+
+**📱 사용 방법**
+
+1. **파일 선택**: EML, MSG 또는 텍스트 파일을 선택
+2. **업로드**: '피싱검사' 버튼 클릭
+3. **결과 확인**: 위험도 점수와 상세 분석 결과 확인
+
+**🎨 기술 스택**
+**프론트엔드**: Next.js 16, React 19, TypeScript
+**스타일링**: Tailwind CSS 4
+**파일 처리**: Multer
+**배포**: Vercel 권장
+
+**📊 위험도 등급**
+
+| 점수 구간 | 등급                                                                | 색상   |
+| --------- | ------------------------------------------------------------------- | ------ |
+| 90점 이상 | 🚨 고위험 피싱 <img src="/img/고위험메일.jpg" alt="" width="250" /> | 빨간색 |
+| 50-89점   | ⚠️ 의심 메일 <img src="/img/의심메일.jpg" alt="" width="250" />     | 주황색 |
+| 0-49점    | ✔️ 안전 메일 <img src="/img/안전메일.jpg" alt="" width="250" />     | 초록색 |
+
+---
+
+## 📘 토이 프로젝트 7: ERD Modeling Tool
+
+- **_[GitHub 보기](https://github.com/TheSungwon/simple-erd) 🔗_**
+- **_[데모사이트](https://simple-erd.vercel.app/) 🚀_**
+
+**✨ 주요 기능**
+
+- 🎯 **드래그 앤 드롭 ERD**: 테이블 자유 이동 및 배치
+- 🔗 **시각적 관계 표현**: 테이블 간 연결선 자동 생성
+- ⚡ **실시간 SQL 생성**: ERD → SQL DDL 자동 변환
+- 📁 **JSON 임포트/익스포트**: 모델 데이터 손쉬운 관리
+- 🎨 **직관적 UI**: 깔끔한 애플 스타일 인터페이스
+
+**🛠️ 기술 스택**
+
+| 기술             | 용도                    |
+| ---------------- | ----------------------- |
+| **Next.js 14**   | 풀스택 React 프레임워크 |
+| **TypeScript**   | 타입 안전성 보장        |
+| **Tailwind CSS** | 모던 스타일링           |
+| **Zustand**      | 경량 상태 관리          |
+| **React Konva**  | 캔버스 드로잉 엔진      |
+
+**🚀 핵심 기능**
+
+1. **테이블 관리**
+
+   - 테이블 생성/수정/삭제
+   - 컬럼 PK/FK 설정
+   - 색상 구분으로 가시성 향상
+
+2. **ERD 캔버스**
+
+   - 드래그로 테이블 배치
+   - 테이블 간 관계선 표시
+   - 그리드 배경 지원
+
+3. **데이터 변환**
+   - SQL CREATE 문 자동 생성
+   - JSON 형식 저장/불러오기
+   - 클립보드 복사 기능
+
+**💡 사용 시나리오**
+
+| 사용자     | 활용 방법                    |
+| ---------- | ---------------------------- |
+| **개발자** | DB 설계 시 빠른 프로토타이핑 |
+| **학생**   | 데이터베이스 개념 학습 도구  |
+| **기획자** | 시스템 아키텍처 시각화       |
+
+**📊 샘플 테이블 구조**
+
+```
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+ │   Users     │────▶│   Posts     │────▶│  Comments   │
+ ├─────────────┤      ├─────────────┤      ├─────────────┤
+ │ • id (PK)   │      │ • id (PK)   │      │ • id (PK)   │
+ │ • name      │      │ • user_id   │      │ • post_id   │
+ │ • email     │      │ • title     │      │ • content   │
+ └─────────────┘      └─────────────┘      └─────────────┘
+```
+
+**🎯 기술적 도전과 해결**
+
+- **문제**: SSR 환경에서 `window` 객체 접근 오류  
+  **해결**: `useEffect` 내에서 클라이언트 사이드 코드 실행
+
+- **문제**: 대규모 테이블 렌더링 성능  
+  **해결**: React Konva의 효율적 캔버스 관리
+
+- **문제**: 복잡한 상태 관리  
+  **해결**: Zustand로 중앙 집중식 상태 관리 구현
+
+**📈 성능 최적화**
+
+| 최적화 항목       | 적용 방법               |
+| ----------------- | ----------------------- |
+| **코드 스플리팅** | 동적 임포트 활용        |
+| **메모이제이션**  | React.memo, useCallback |
+| **렌더링 최적화** | 불필요한 리렌더링 방지  |
+
+**🔮 향후 개선사항**
+
+- [ ] 실시간 협업 기능
+- [ ] 다중 ERD 프로젝트 관리
+- [ ] 실제 DB 연동
+- [ ] 다크 모드 지원
+- [ ] 키보드 단축키 시스템
+
+---
+
+**💭 개발자 후기**
+
+"이 프로젝트를 통해 캔버스 기반 드로잉 시스템의 구현과 복잡한 상태 관리를 경험했습니다. 특히 서버사이드 렌더링 환경에서 클라이언트 사이드 라이브러리 통합의 어려움과 해결 방법을 깊이 이해할 수 있었습니다."
+
+---
 
 # 감사합니다 ! 😄
