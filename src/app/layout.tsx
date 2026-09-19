@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="antialiased">
         <Providers>
           <div className="flex flex-col min-h-screen">
-            <Header />
+            {/* <Header /> */}
             <main className="flex-grow">{children}</main>
           </div>
         </Providers>
