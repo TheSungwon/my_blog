@@ -467,44 +467,40 @@ export default function Home() {
                             </p>
                         </div>
 
-                        <div className="space-y-7 text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg">
+                        <div className="space-y-7 break-keep text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg">
                             <p>
                                 <strong className="text-zinc-900 dark:text-white">
                                     Java · Spring Boot
-                                </strong>
-                                를 중심으로 백엔드 시스템을 개발해왔으며,
+                                </strong>{" "}
+                                를 중심으로 백엔드 시스템을 개발해왔으며,{" "}
                                 <strong className="text-blue-600 dark:text-blue-400">
-                                    {" "}
                                     5년 3개월의 실무 경험
                                 </strong>
                                 을 보유하고 있습니다.
                             </p>
 
                             <p>
-                                고객사 웹포탈과 시스템 연계를 직접 개발하며
+                                고객사 웹포탈과 시스템 연계를 직접 개발하며{" "}
                                 <strong className="text-zinc-900 dark:text-white">
-                                    {" "}
                                     API · DB · EAI
-                                </strong>
+                                </strong>{" "}
                                 기반의 데이터 처리와 서비스 개발을 경험했습니다.
                             </p>
 
                             <p>
-                                최근에는
+                                최근에는{" "}
                                 <strong className="text-blue-600 dark:text-blue-400">
-                                    {" "}
                                     LLM · AI OCR · vLLM
-                                </strong>
-                                을 직접 적용하고, AI 모델을 기존 업무
-                                시스템과 연계하는 개발을 진행하고 있습니다.
+                                </strong>{" "}
+                                을 직접 적용하고, AI 모델을 기존 업무 시스템과 연계하는 개발을
+                                진행하고 있습니다.
                             </p>
 
                             <p>
-                                또한 RPA · OCR 기반 자동화 프로젝트를 수행하며
+                                또한 RPA · OCR 기반 자동화 프로젝트를 수행하며{" "}
                                 <strong className="text-zinc-900 dark:text-white">
-                                    {" "}
                                     업무 분석부터 시스템 개발 및 운영
-                                </strong>
+                                </strong>{" "}
                                 까지 경험했습니다.
                             </p>
 
