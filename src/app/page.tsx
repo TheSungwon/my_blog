@@ -14,146 +14,100 @@ type Project = {
     summary: string;
     tags: string[];
     stats: { label: string; value: string }[];
-    details: {
-        title: string;
-        description: string;
-    }[];
+    flow: { from: string; to: string; label: string }[];
+    details: string[];
 };
 
 const projects: Project[] = [
     {
-        icon: "📈",
-        category: "RPA PROJECT",
-        title: "A 증권사 RPA 구축",
-        period: "2021 ~ 2022",
-        role: "RPA 개발",
-        summary:
-            "내부 결재, 회계 및 예탁원 데이터 처리 업무를 RPA 기반으로 자동화한 프로젝트",
-        tags: ["RPA", "VBA", "C#", "OCR"],
-        stats: [
-            { label: "기간", value: "2년" },
-            { label: "Automation", value: "11건" },
-        ],
-        details: [
-            {
-                title: "결재서류 일괄 전송 자동화",
-                description:
-                    "일일 결재서류를 자동 조회 및 다운로드하고 부서별 업무 화면에 맞춰 결재서류를 자동 업로드",
-            },
-            {
-                title: "법인카드 사용내역 검증 자동화",
-                description:
-                    "부서별 근태 데이터와 법인카드 사용내역을 자동 수집하고 데이터를 대조하여 이상 여부를 검증하는 프로세스 구현",
-            },
-            {
-                title: "예탁원 자료 수집 및 등록 자동화",
-                description:
-                    "영업일 기준 예탁원 자료를 자동 수집하고 고객사 프로그램을 통한 데이터 등록 및 대사 처리 자동화",
-            },
-            {
-                title: "예탁원 파일 처리",
-                description:
-                    "예탁원 파일을 자동 다운로드하고 부서별 업무에 필요한 파일을 자동 전송",
-            },
-            {
-                title: "보수총액 데이터 등록 자동화",
-                description:
-                    "문서 파일 자동 다운로드 → OCR을 활용한 보수총액 데이터 추출 → 데이터 가공 → 고객사 시스템 자동 등록",
-            },
-        ],
-    },
-    {
-        icon: "🛡️",
-        category: "RPA PROJECT",
-        title: "B 보험사 RPA 자동화 시스템",
-        period: "2023 ~ 2026",
-        role: "RPA 개발 / 1인 개발 주도",
-        summary:
-            "보험 정보 입력, 파일 업로드, 통계 등록 등 부서별 반복 업무를 자동화한 RPA 시스템",
-        tags: ["RPA", "VBA", "C#", "Selenium", "OneDrive", "Teams"],
-        stats: [
-            { label: "기간", value: "4년" },
-            { label: "Automation", value: "30+" },
-            { label: "개발", value: "1인 주도" },
-        ],
-        details: [
-            {
-                title: "부서별 보험 정보 입력 자동화",
-                description:
-                    "부서별 Excel 보험 데이터를 자동 추출하여 고객사 내부 프로그램에 등록하고 대량의 보험 정보 입력 업무를 자동화",
-            },
-            {
-                title: "보험 관련 파일 업로드 자동화",
-                description:
-                    "부서별 보험 관련 파일 및 정보를 자동 수집하고 수집한 파일을 고객사 프로그램에 자동 업로드",
-            },
-            {
-                title: "OneDrive / Teams 연계",
-                description:
-                    "OneDrive와 Teams 등 업무 시스템을 활용하여 RPA 처리에 필요한 파일을 관리하고 처리 상태를 공유",
-            },
-            {
-                title: "보험 통계 자동 등록",
-                description:
-                    "월별 부서 보험 통계 데이터를 자동 수집 및 계산하고 고객사 시스템에 등록",
-            },
-            {
-                title: "웹 업무 자동화 및 운영",
-                description:
-                    "Selenium을 활용한 웹 기반 업무 자동화와 RPA 프로세스 운영, 오류 원인 분석 및 지속적인 유지보수",
-            },
-        ],
-    },
-    {
-        icon: "🔗",
-        category: "BACKEND / RPA",
-        title: "C 은행 웹포탈 & RPA 통합 시스템",
+        icon: "🏦",
+        category: "BANK / WEB PORTAL / RPA",
+        title: "을지로 C 은행 RPA & 웹포탈 구축",
         period: "2025 상반기",
-        role: "Backend / 웹포탈 / RPA 개발",
+        role: "Backend / Web Portal / RPA",
         summary:
-            "OCR과 RPA 데이터를 통합하고 EAI를 통해 고객사 시스템과 연계하는 웹포탈 구축",
+            "RPA 처리 결과와 OCR 데이터를 통합 관리하고 EAI를 통해 은행 시스템과 연계하는 웹포탈 구축",
         tags: ["Spring Boot", "JPA", "SQL", "RPA", "OCR", "EAI", "Docker"],
         stats: [
             { label: "Role", value: "Backend" },
             { label: "Integration", value: "EAI" },
+            { label: "Automation", value: "RPA" },
             { label: "Data", value: "OCR" },
         ],
+        flow: [
+            { from: "OCR", to: "Web Portal", label: "추출 데이터" },
+            { from: "Web Portal", to: "EAI", label: "API 연계" },
+            { from: "EAI", to: "Bank System", label: "데이터 전달" },
+            { from: "RPA", to: "Customer Program", label: "자동 입력" },
+        ],
         details: [
-            {
-                title: "RPA 자동화 프로세스",
-                description:
-                    "OCR 추출 데이터를 기반으로 여신 사후 정보를 고객사 프로그램에 자동 입력하고 OCR 결과 정제 및 데이터 검증 로직 구현",
-            },
-            {
-                title: "웹포탈 Backend 개발",
-                description:
-                    "Spring Boot 기반 REST API 서버를 설계 및 개발하고 OCR 추출 결과와 RPA 처리 내역을 조회하고 관리할 수 있는 API 구현",
-            },
-            {
-                title: "배치 스케줄링",
-                description:
-                    "반복적인 업무 처리를 위한 배치 스케줄링을 적용하고 정해진 주기에 따라 데이터 처리 및 자동화 업무 수행",
-            },
-            {
-                title: "EAI 기반 시스템 연계",
-                description:
-                    "EAI를 활용하여 은행 시스템과 고객사 프로그램 간 API 및 데이터를 연계하고 OCR 추출 데이터를 EAI를 통해 고객사 시스템으로 전달",
-            },
-            {
-                title: "데이터 정합성 처리",
-                description:
-                    "시스템 간 데이터 송수신 과정에서 데이터 형식과 상태를 검증하고 서로 다른 시스템의 데이터를 안정적으로 처리",
-            },
-            {
-                title: "Database",
-                description:
-                    "JPA와 SQL을 병행하여 업무 특성에 맞는 데이터 조회 및 관리 기능 구현",
-            },
-            {
-                title: "배포 및 운영",
-                description:
-                    "Docker 기반 애플리케이션 배포 환경을 구성하고 Jira를 활용하여 개발 및 운영 업무 관리",
-            },
+            "Spring Boot 기반 고객사 웹포탈 Backend 시스템 설계 및 개발",
+            "OCR 추출 결과와 RPA 처리 내역을 웹포탈에서 통합 조회",
+            "EAI를 활용하여 은행 배치 시스템 및 고객사 프로그램과 API 연계",
+            "OCR 추출 데이터를 EAI를 통해 고객사 시스템으로 전달",
+            "여신 사후 정보 입력 및 OCR 데이터를 고객사 프로그램에 자동 입력",
+            "시스템 간 데이터 송수신 및 데이터 정합성 처리",
+            "Docker 기반 배포 환경 구성",
+        ],
+    },
+    {
+        icon: "🛡️",
+        category: "INSURANCE / RPA",
+        title: "광화문 B 보험사 RPA 프로젝트",
+        period: "2023 ~ 2026",
+        role: "RPA 개발 / 1인 개발 주도",
+        summary:
+            "보험 업무 프로세스 분석부터 자동화 설계·개발까지 전 과정을 주도한 RPA 프로젝트",
+        tags: ["RPA", "VBA", "C#", "Selenium", "OneDrive", "Teams"],
+        stats: [
+            { label: "기간", value: "4년" },
+            { label: "Automation", value: "30건" },
+            { label: "개발", value: "1인 주도" },
+            { label: "Domain", value: "보험" },
+        ],
+        flow: [
+            { from: "Excel", to: "RPA", label: "데이터 추출" },
+            { from: "OneDrive", to: "RPA", label: "파일 수집" },
+            { from: "RPA", to: "Customer Program", label: "대량 등록" },
+            { from: "RPA", to: "Teams", label: "파일 관리" },
+        ],
+        details: [
+            "보험 업무 프로세스 분석부터 자동화 시스템 설계 및 구축까지 1인 개발 주도",
+            "부서별 엑셀 데이터를 추출하여 고객사 프로그램에 보험 정보 대량 등록",
+            "보험 관련 파일 및 정보를 자동 수집하고 고객사 프로그램에 업로드",
+            "OneDrive, Teams 등 외부 업무 시스템과 연계한 파일 관리 자동화",
+            "월별 부서 보험 통계 데이터를 자동 수집 및 등록",
+            "Selenium 기반 웹 자동화 프로세스 개발 및 운영",
+        ],
+    },
+    {
+        icon: "📈",
+        category: "SECURITIES / RPA",
+        title: "여의도 A 증권사 RPA 프로젝트",
+        period: "2021 ~ 2022",
+        role: "RPA 개발",
+        summary:
+            "증권 업무 프로세스를 분석하고 반복 업무를 자동화하여 총 11건의 RPA 프로세스를 구축",
+        tags: ["RPA", "VBA", "C#", "OCR"],
+        stats: [
+            { label: "기간", value: "2년" },
+            { label: "Automation", value: "11건" },
+            { label: "Domain", value: "증권" },
+            { label: "OCR", value: "적용" },
+        ],
+        flow: [
+            { from: "Internal System", to: "RPA", label: "자료 조회" },
+            { from: "RPA", to: "File", label: "파일 처리" },
+            { from: "OCR", to: "RPA", label: "데이터 추출" },
+            { from: "RPA", to: "Customer System", label: "자동 등록" },
+        ],
+        details: [
+            "증권 업무 프로세스 분석 및 RPA 자동화 시스템 구축",
+            "총 11건의 업무 자동화 프로세스 설계 및 개발",
+            "일일 결재서류를 자동 조회 및 다운로드하고 부서별 시스템에 일괄 업로드",
+            "법인카드 사용 내역 검증 및 부서별 근태 처리 자동화",
+            "영업일 기준 예탁원 자료를 자동 수집하고 고객사 시스템으로 전달 및 대사",
+            "문서 파일 OCR 처리 후 보수총액 데이터를 추출하여 고객사 시스템에 자동 등록",
         ],
     },
 ];
@@ -603,17 +557,22 @@ export default function Home() {
                         ]}
                     />
 
+
                     <SkillCard
-                        icon={<RobotIcon />}
-                        title="Automation"
+                        icon={<CloudIcon />}
+                        title="DevOps / Tools"
                         items={[
-                            "RPA",
-                            "VBA",
-                            "C#",
-                            "Selenium",
-                            "Playwright",
+                            "Linux",
+                            "Docker",
+                            "Podman",
+                            "GitHub",
+                            "GitLab",
+                            "Jira",
+                            "Slack",
+                            "Teams",
                         ]}
                     />
+
 
                     <SkillCard
                         icon={<AiIcon />}
@@ -636,20 +595,19 @@ export default function Home() {
                         ]}
                     />
 
+
                     <SkillCard
-                        icon={<CloudIcon />}
-                        title="DevOps / Tools"
+                        icon={<RobotIcon />}
+                        title="Automation"
                         items={[
-                            "Linux",
-                            "Docker",
-                            "Podman",
-                            "GitHub",
-                            "GitLab",
-                            "Jira",
-                            "Slack",
-                            "Teams",
+                            "RPA",
+                            "VBA",
+                            "C#",
+                            "Selenium",
+                            "Playwright",
                         ]}
                     />
+
                 </div>
             </section>
 
@@ -779,112 +737,113 @@ function SectionTitle({
 /* Project Card */
 /* -------------------------------- */
 
+function ProjectFlow({ flow }: { flow: Project["flow"] }) {
+    return (
+        <div className="mt-7 overflow-x-auto pb-2">
+            <div className="flex min-w-max items-center gap-2">
+                {flow.map((item, index) => (
+                    <div key={`${item.from}-${item.to}-${index}`} className="flex items-center gap-2">
+                        <div className="min-w-[125px] rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-blue-800">
+                            <span className="block text-[10px] font-bold tracking-wider text-blue-500 dark:text-blue-400">
+                                {item.label}
+                            </span>
+                            <span className="mt-1 block text-sm font-bold text-zinc-800 dark:text-zinc-100">
+                                {item.from}
+                            </span>
+                        </div>
+
+                        <svg width="48" height="24" viewBox="0 0 48 24" fill="none" className="shrink-0 text-blue-500">
+                            <path d="M3 12H39" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 5" className="animate-pulse" />
+                            <path d="M34 7L40 12L34 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+
+                        {index === flow.length - 1 && (
+                            <div className="min-w-[125px] rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-900 dark:bg-blue-950/30">
+                                <span className="block text-[10px] font-bold tracking-wider text-blue-500 dark:text-blue-400">
+                                    RESULT
+                                </span>
+                                <span className="mt-1 block text-sm font-bold text-blue-900 dark:text-blue-200">
+                                    {item.to}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 function ProjectCard({ project }: { project: Project }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <article
-            className={`group overflow-hidden rounded-[2rem] border bg-white transition-all duration-500 dark:bg-zinc-950 ${open
-                ? "border-zinc-400 shadow-2xl dark:border-zinc-600"
-                : "border-zinc-200 shadow-sm hover:-translate-y-1 hover:shadow-xl dark:border-zinc-800"
-                }`}
-        >
-            <div className="p-7 sm:p-9">
+        <article className={`group relative overflow-hidden rounded-[2rem] border bg-white transition-all duration-500 dark:bg-zinc-950 ${open
+            ? "border-blue-300 shadow-2xl shadow-blue-500/10 dark:border-blue-800"
+            : "border-zinc-200 shadow-sm hover:-translate-y-1 hover:shadow-xl dark:border-zinc-800"
+            }`}>
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl transition-transform duration-700 group-hover:scale-150" />
+
+            <div className="relative p-7 sm:p-9">
                 <div className="flex flex-col justify-between gap-6 md:flex-row">
-                    <div>
-                        <p className="text-xs font-bold tracking-[0.2em] text-zinc-400 dark:text-zinc-500">
-                            {project.category}
-                        </p>
+                    <div className="flex gap-4">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 dark:bg-blue-950/40">
+                            {project.icon}
+                        </div>
 
-                        <h3 className="mt-3 text-2xl font-bold sm:text-3xl">
-                            {project.icon} {project.title}
-                        </h3>
+                        <div>
+                            <p className="text-xs font-bold tracking-[0.2em] text-blue-500 dark:text-blue-400">
+                                {project.category}
+                            </p>
 
-                        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-                            {project.period} · {project.role}
-                        </p>
+                            <h3 className="mt-2 text-2xl font-bold sm:text-3xl">
+                                {project.title}
+                            </h3>
+
+                            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+                                {project.period} · {project.role}
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">
                         {project.stats.map((stat) => (
-                            <div
-                                key={stat.label}
-                                className="min-w-[85px] rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-center dark:border-zinc-800 dark:bg-zinc-900"
-                            >
-                                <strong className="block text-lg">
-                                    {stat.value}
-                                </strong>
-
-                                <span className="text-[10px] uppercase tracking-wider text-zinc-400">
-                                    {stat.label}
-                                </span>
+                            <div key={stat.label} className="min-w-[82px] rounded-2xl border border-zinc-200 bg-zinc-50 px-3 py-3 text-center dark:border-zinc-800 dark:bg-zinc-900">
+                                <strong className="block text-lg font-black">{stat.value}</strong>
+                                <span className="text-[10px] uppercase tracking-wider text-zinc-400">{stat.label}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-2">
+                <p className="mt-6 max-w-4xl text-sm leading-7 text-zinc-600 dark:text-zinc-300">
+                    {project.summary}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className="rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-transform duration-300 hover:scale-105 dark:bg-zinc-900 dark:text-zinc-300"
-                        >
+                        <span key={tag} className="rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-medium text-zinc-600 transition-all duration-300 hover:scale-105 hover:bg-blue-50 hover:text-blue-600 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-blue-950/30 dark:hover:text-blue-400">
                             {tag}
                         </span>
                     ))}
                 </div>
 
-                <p className="mt-6 max-w-4xl leading-7 text-zinc-600 dark:text-zinc-300">
-                    {project.summary}
-                </p>
+                <ProjectFlow flow={project.flow} />
 
-                <button
-                    type="button"
-                    onClick={() => setOpen(!open)}
-                    className="mt-7 flex w-full items-center justify-between rounded-2xl border border-zinc-200 px-5 py-4 text-left text-sm font-semibold transition-all hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900"
-                >
-                    <span>
-                        {open ? "프로젝트 상세 닫기" : "프로젝트 상세 보기"}
-                    </span>
-
-                    <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-full bg-zinc-100 transition-transform duration-500 dark:bg-zinc-800 ${open ? "rotate-180" : ""
-                            }`}
-                    >
-                        ↓
-                    </span>
+                <button type="button" onClick={() => setOpen(!open)} className="mt-5 flex w-full items-center justify-between rounded-2xl border border-zinc-200 px-5 py-4 text-left text-sm font-semibold transition-all hover:border-blue-300 hover:bg-blue-50 dark:border-zinc-800 dark:hover:border-blue-800 dark:hover:bg-blue-950/20">
+                    <span>{open ? "프로젝트 상세 닫기" : "실제 수행 업무 보기"}</span>
+                    <span className={`flex h-7 w-7 items-center justify-center rounded-full bg-zinc-100 transition-transform duration-300 dark:bg-zinc-800 ${open ? "rotate-180" : ""}`}>↓</span>
                 </button>
 
-                <div
-                    className={`grid transition-all duration-700 ${open
-                        ? "mt-7 grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
-                        }`}
-                >
+                <div className={`grid transition-all duration-500 ${open ? "mt-7 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
                     <div className="overflow-hidden">
                         <div className="border-t border-zinc-200 pt-7 dark:border-zinc-800">
                             <div className="relative ml-3 border-l border-zinc-200 pl-7 dark:border-zinc-800">
                                 {project.details.map((detail, index) => (
-                                    <div
-                                        key={detail.title}
-                                        className="relative mb-7 last:mb-0"
-                                        style={{
-                                            transitionDelay: `${index * 80}ms`,
-                                        }}
-                                    >
-                                        <span className="absolute -left-[35px] top-1 flex h-4 w-4 items-center justify-center rounded-full border-4 border-white bg-zinc-900 dark:border-zinc-950 dark:bg-white" />
-
-                                        <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500">
-                                            0{index + 1}
-                                        </span>
-
-                                        <h4 className="mt-1 text-lg font-bold">
-                                            {detail.title}
-                                        </h4>
-
-                                        <p className="mt-2 max-w-3xl text-sm leading-7 text-zinc-500 dark:text-zinc-300">
-                                            {detail.description}
-                                        </p>
+                                    <div key={detail} className="relative mb-7 last:mb-0">
+                                        <span className="absolute -left-[35px] top-1 flex h-4 w-4 items-center justify-center rounded-full border-4 border-white bg-blue-500 dark:border-zinc-950" />
+                                        <span className="text-xs font-semibold text-blue-500 dark:text-blue-400">0{index + 1}</span>
+                                        <p className="mt-1 text-sm leading-7 text-zinc-600 dark:text-zinc-300">{detail}</p>
                                     </div>
                                 ))}
                             </div>
